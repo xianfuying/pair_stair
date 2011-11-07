@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Pair Stairs</title>
+</head>
+<body>
+<div id="stairs">
+    <table>
+        <tr class="column">
+            <td></td>
+            {% for programmer in programmers_column %}
+                <td class="name">{{ programmer.name }}</td>
+            {% endfor %}
+        </tr>
+        {% for programmer_in_row in programmers_row %}
+            <tr class="row">
+                <td class="name">{{ programmer_in_row.name }}</td>
+                {% for pair in pairs %}
+                    {% if programmer_in_row == pair.first %}
+                        <td class="pair"><a href="">count</a></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>
