@@ -18,7 +18,7 @@
                 <td class="name">{{ programmer_in_row.name }}</td>
                 {% for pair in pairs %}
                     {% if programmer_in_row == pair.first %}
-                        <td class="pair"><a href="">count</a></td>
+                        <td class="pair"><a href="/stairs/{{ pair.first.id }}/{{ pair.second.id }}">{{ pair.count }}</a></td>
                     {% endif %}
                 {% endfor %}
             </tr>

@@ -8,3 +8,4 @@ class Programmer(models.Model):
 class Pair(models.Model):
     first = models.ForeignKey(Programmer, related_name='first')
     second = models.ForeignKey(Programmer, related_name='second')
+    count = models.IntegerField()

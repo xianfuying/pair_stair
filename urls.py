@@ -5,10 +5,13 @@ from django.conf.urls.defaults import patterns, include, url
 # admin.autodiscover()
 from pairstair.views import add_programmers
 from pairstair.views import stairs
+from pairstair.views import add
+
 
 urlpatterns = patterns('',
     url(r'^create/', add_programmers),
-    url(r'^stairs/', stairs),
+    url(r'^stairs/$', stairs),
+    url(r'^stairs/(?P<firstMember_id>.+?)/(?P<secondMember_id>.+?)$', add)
     # Examples:
     # url(r'^$', 'learning.views.home', name='home'),
     # url(r'^learning/', include('learning.foo.urls')),

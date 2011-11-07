@@ -27,7 +27,22 @@ def create_pairs(programmers):
     for programmer in programmers[1:]:
         for programmer_1 in programmers[0:-1]:
             if programmer != programmer_1:
-                pairs.append(Pair(first=programmer, second=programmer_1))
+                try:
+                    pairs.append(Pair.objects.get(first = programmer, second = programmer_1))
+                except :
+                    pairs.append(Pair(first=programmer, second=programmer_1, count = 0))
             else:
                 break
     return pairs
+
+
+def add(request, firstMember_id, secondMember_id):
+    programmer1 = Programmer.objects.get(id=firstMember_id)
+    programmer2 = Programmer.objects.get(id=secondMember_id)
+    try:
+        pair = Pair.objects.get(first = programmer1, second = programmer2)
+        pair.count += 1
+        pair.save()
+    except :
+        Pair(first = programmer1, second = programmer2, count = 1).save()
+    return redirect(stairs)

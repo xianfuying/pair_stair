@@ -7,6 +7,7 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 from django.test.client import Client
+from mock import Mock
 from models import Programmer, Pair
 from views import create_pairs
 
@@ -52,3 +53,42 @@ class TestPairStair(TestCase):
             count += 1
         pairs = create_pairs(programmers)
         self.assertEqual(1, len(pairs))
+
+    def test_should_get_pair_from_database_if_exist(self):
+        programmer1 = Programmer(name='Minkey', id=1)
+        programmer2 = Programmer(name='Minnie', id=2)
+        programmer1.save()
+        programmer2.save()
+        programmers = [programmer1,programmer2]
+        Pair(first=programmer2, second=programmer1, count = 2).save()
+        pairs = create_pairs(programmers)
+        self.assertEqual(2, pairs[0].count)
+
+    def test_should_redirect_to_stair_page(self):
+        programmer1 = Programmer(name='Minkey', id=1)
+        programmer2 = Programmer(name='Minnie', id=2)
+        programmer1.save()
+        programmer2.save()
+        response = Client().get("/stairs/2/1")
+        self.assertRedirects(response, "/stairs/")
+
+    def test_should_save_pair(self):
+        programmer1 = Programmer(name='Minkey', id=1)
+        programmer2 = Programmer(name='Minnie', id=2)
+        programmer1.save()
+        programmer2.save()
+        Client().get("/stairs/2/1")
+        pair = Pair.objects.get(first=programmer2, second=programmer1)
+        self.assertEqual(1, pair.count)
+
+    def test_should_add_pair_count_by_one(self):
+        programmer1 = Programmer(name='Minkey', id=1)
+        programmer2 = Programmer(name='Minnie', id=2)
+        programmer1.save()
+        programmer2.save()
+        Client().get("/stairs/2/1")
+        pair = Pair.objects.get(first=programmer2, second=programmer1)
+        self.assertEqual(1, pair.count)
+        Client().get("/stairs/2/1")
+        pair = Pair.objects.get(first=programmer2, second=programmer1)
+        self.assertEqual(2, pair.count)
