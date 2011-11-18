@@ -7,7 +7,6 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 from django.test.client import Client
-from mock import Mock
 from models import Programmer, Pair
 from views import create_pairs
 
