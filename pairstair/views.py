@@ -8,7 +8,7 @@ def add_programmers(request):
         names = request.POST["programmer_names"].split(",")
         Programmer.objects.all().delete()
         for name in names:
-            Programmer(name = name).save()
+            Programmer(name = str(name).strip()).save()
         return redirect(stairs)
     return render_to_response("create_programmers.html", RequestContext(request))
 
@@ -30,6 +30,7 @@ def create_pairs(programmers):
                 try:
                     pairs.append(Pair.objects.get(first = programmer, second = programmer_1))
                 except :
+#        Exception handling for normal code flow is a bad practice, think of the problems this might have and alternate ways to implement
                     pairs.append(Pair(first=programmer, second=programmer_1, count = 0))
             else:
                 break

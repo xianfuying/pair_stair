@@ -45,11 +45,7 @@ class TestPairStair(TestCase):
         self.assertTemplateUsed(response, "error.html")
 
     def test_should_create_pairs(self):
-        programmers = []
-        count = 0
-        for name in NAMES:
-            programmers.append(Programmer(name = name, id = count))
-            count += 1
+        programmers = [Programmer(name="Minkey", id=1), Programmer(name="Minne", id=2)]
         pairs = create_pairs(programmers)
         self.assertEqual(1, len(pairs))
 
@@ -59,9 +55,10 @@ class TestPairStair(TestCase):
         programmer1.save()
         programmer2.save()
         programmers = [programmer1,programmer2]
-        Pair(first=programmer2, second=programmer1, count = 2).save()
+        pair_times = 2
+        Pair(first=programmer2, second=programmer1, count =pair_times).save()
         pairs = create_pairs(programmers)
-        self.assertEqual(2, pairs[0].count)
+        self.assertEqual(pair_times, pairs[0].count)
 
     def test_should_redirect_to_stair_page(self):
         programmer1 = Programmer(name='Minkey', id=1)

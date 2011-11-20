@@ -10,12 +10,12 @@
         <tr class="column">
             <td></td>
             {% for programmer in programmers_column %}
-                <td class="name">{{ programmer.name }}</td>
+                <td class="name{{ programmer.name }}">{{ programmer.name }}</td>
             {% endfor %}
         </tr>
         {% for programmer_in_row in programmers_row %}
             <tr class="row">
-                <td class="name">{{ programmer_in_row.name }}</td>
+                <td class="name{{ programmer_in_row.name }}">{{ programmer_in_row.name }}</td>
                 {% for pair in pairs %}
                     {% if programmer_in_row == pair.first %}
                         <td class="pair"><a href="/stairs/{{ pair.first.id }}/{{ pair.second.id }}">{{ pair.count }}</a></td>
